@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Mine;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +14,18 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+        $entityManager = $this->getDoctrine()->getManager();
+        $mines = $entityManager->getRepository(Mine::class)->findAll();
+        
+        $serviceMine = $this->get('echo_mine.mineService');
+        
+        foreach ($mines as $mine) {
+            
+            $serviceMine->updateMineResources($mine);
+        }
+        return $this->render(
+            'default/index.html.twig', [
+                'mines' => $mines,
         ]);
     }
 }
