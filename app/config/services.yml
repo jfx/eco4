@@ -4,6 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
-    echo_mine.mineService:
-        class: AppBundle\Service\MineService
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+    app.engine:
+        class: AppBundle\Service\EngineService
         arguments: [ '@doctrine.orm.entity_manager' ]
+

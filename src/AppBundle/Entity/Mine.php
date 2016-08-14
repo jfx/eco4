@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+declare (strict_types = 1);
 
 namespace AppBundle\Entity;
 
@@ -33,7 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @link      http://
  *
- * @ORM\Table(name="mine")
+ * @ORM\Table(name="echo_mine")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MineRepository")
  */
 class Mine
@@ -109,11 +110,23 @@ class Mine
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * Upgrade level of mine
+     *
+     * @return Mine
+     */
+    public function upgrade(): Mine
+    {
+        $this->level++;
+
+        return $this;
+    }
+    
     /**
      * Set level
      *
@@ -121,7 +134,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setLevel($level)
+    public function setLevel(int $level): Mine
     {
         $this->level = $level;
 
@@ -133,7 +146,7 @@ class Mine
      *
      * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
@@ -145,7 +158,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setR1($r1)
+    public function setR1(float $r1): Mine
     {
         $this->r1 = $r1;
 
@@ -157,7 +170,7 @@ class Mine
      *
      * @return float
      */
-    public function getR1()
+    public function getR1(): float
     {
         return $this->r1;
     }
@@ -169,7 +182,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setR2($r2)
+    public function setR2(float $r2): Mine
     {
         $this->r2 = $r2;
 
@@ -181,7 +194,7 @@ class Mine
      *
      * @return float
      */
-    public function getR2()
+    public function getR2(): float
     {
         return $this->r2;
     }
@@ -193,7 +206,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setR3($r3)
+    public function setR3(float $r3): Mine
     {
         $this->r3 = $r3;
 
@@ -205,7 +218,7 @@ class Mine
      *
      * @return float
      */
-    public function getR3()
+    public function getR3(): float
     {
         return $this->r3;
     }
@@ -217,7 +230,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setR1Factor($r1Factor)
+    public function setR1Factor(int $r1Factor): Mine
     {
         $this->r1Factor = $r1Factor;
 
@@ -229,7 +242,7 @@ class Mine
      *
      * @return int
      */
-    public function getR1Factor()
+    public function getR1Factor(): int
     {
         return $this->r1Factor;
     }
@@ -241,7 +254,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setR2Factor($r2Factor)
+    public function setR2Factor(int $r2Factor): Mine
     {
         $this->r2Factor = $r2Factor;
 
@@ -253,7 +266,7 @@ class Mine
      *
      * @return int
      */
-    public function getR2Factor()
+    public function getR2Factor(): int
     {
         return $this->r2Factor;
     }
@@ -265,7 +278,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setR3Factor($r3Factor)
+    public function setR3Factor(int $r3Factor): Mine
     {
         $this->r3Factor = $r3Factor;
 
@@ -277,7 +290,7 @@ class Mine
      *
      * @return int
      */
-    public function getR3Factor()
+    public function getR3Factor(): int
     {
         return $this->r3Factor;
     }
@@ -289,7 +302,7 @@ class Mine
      *
      * @return Mine
      */
-    public function setLastUpdate($lastUpdate)
+    public function setLastUpdate(DateTime $lastUpdate): Mine
     {
         $this->lastUpdate = $lastUpdate;
 
@@ -301,9 +314,34 @@ class Mine
      *
      * @return DateTime
      */
-    public function getLastUpdate()
+    public function getLastUpdate(): DateTime
     {
         return $this->lastUpdate;
     }
-}
+    
+    /**
+     * Update resources.
+     *
+     * @param DateTime $dateTime Date time (Optional)
+     * 
+     * @return void
+     */
+    public function refresh(DateTime $dateTime)
+    {     
+        $period = (
+            $dateTime->format('U') - $this->getLastUpdate()->format('U')
+        ) / 3600;
 
+        $prodByLevel = 5 * $this->getLevel() * 1.1 ^ $this->getLevel();
+        
+        $coefR1 = $prodByLevel * $this->getR1Factor() / 100;
+        $coefR2 = $prodByLevel * $this->getR2Factor() / 100;
+        $coefR3 = $prodByLevel * $this->getR3Factor() / 100;
+        
+        $this->setR1($this->getR1() + $period * $coefR1);
+        $this->setR2($this->getR2() + $period * $coefR2);
+        $this->setR3($this->getR3() + $period * $coefR3);
+        
+        $this->setLastUpdate($dateTime);
+    }
+}
