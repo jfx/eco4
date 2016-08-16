@@ -1,7 +1,7 @@
 <?php
 
 /**
- * LICENSE : This file is part of Echo Project.
+ * LICENSE : This file is part of Eco4.
  *
  * My Agile Product is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,13 +28,13 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Load mine data class.
  *
- * @category  Echo project.
+ * @category  Eco4 App
  *
  * @author    Francois-Xavier Soubirou <soubirou@yahoo.fr>
  * @copyright 2016 Francois-Xavier Soubirou
  * @license   http://www.gnu.org/licenses/   GPLv3
  *
- * @link      http://
+ * @link      https://www.eco4.io
  */
 class Events extends AbstractFixture implements OrderedFixtureInterface
 {
