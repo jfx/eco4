@@ -1,5 +1,5 @@
 {
-    "name": "fxs/echo",
+    "name": "fxs/eco4",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -34,7 +34,10 @@
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
 	"phpunit/phpunit": "5.5.*",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "jakub-onderka/php-parallel-lint": "*",
+        "jakub-onderka/php-console-highlighter": "*",
+        "friendsofphp/php-cs-fixer": "*"
     },
     "scripts": {
         "post-install-cmd": [
