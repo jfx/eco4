@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace AppBundle\Entity;
 
 use DateTime;
@@ -39,13 +38,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Event
 {
     const CAT_UPGRADE = 1;
-    
+
     const OT_MINE = 1;
-    
-    const STATUS_PLANNED  = 1;
-    const STATUS_DONE     = 2;
+
+    const STATUS_PLANNED = 1;
+    const STATUS_DONE = 2;
     const STATUS_CANCELED = 3;
-    
+
     /**
      * @var int
      *
@@ -68,14 +67,14 @@ class Event
      * @ORM\Column(name="object_type", type="integer")
      */
     protected $objectType;
-    
+
     /**
      * @var int
      *
      * @ORM\Column(name="object_id", type="integer")
      */
     private $objectId;
-    
+
     /**
      * @var \DateTime
      *
@@ -89,10 +88,9 @@ class Event
      * @ORM\Column(name="status", type="integer")
      */
     protected $status;
-    
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -100,9 +98,9 @@ class Event
     {
         return $this->id;
     }
-    
+
     /**
-     * Set Category of event
+     * Set Category of event.
      *
      * @param int $category Category of event
      *
@@ -114,9 +112,9 @@ class Event
 
         return $this;
     }
-    
+
     /**
-     * Get Category of event
+     * Get Category of event.
      *
      * @return int
      */
@@ -126,7 +124,7 @@ class Event
     }
 
     /**
-     * Set type of object
+     * Set type of object.
      *
      * @param int Type of object
      *
@@ -140,7 +138,7 @@ class Event
     }
 
     /**
-     * Get type of object
+     * Get type of object.
      *
      * @return int
      */
@@ -150,9 +148,9 @@ class Event
     }
 
     /**
-     * Set object id
+     * Set object id.
      *
-     * @param integer $id Id of object
+     * @param int $id Id of object
      *
      * @return Event
      */
@@ -164,7 +162,7 @@ class Event
     }
 
     /**
-     * Get object id
+     * Get object id.
      *
      * @return int
      */
@@ -174,7 +172,7 @@ class Event
     }
 
     /**
-     * Set date time of event
+     * Set date time of event.
      *
      * @param DateTime $datetime
      *
@@ -188,7 +186,7 @@ class Event
     }
 
     /**
-     * Get date time of event
+     * Get date time of event.
      *
      * @return DateTime
      */
@@ -196,9 +194,9 @@ class Event
     {
         return $this->eventDatetime;
     }
-       
+
     /**
-     * Get status of event
+     * Get status of event.
      *
      * @return int
      */
@@ -208,7 +206,7 @@ class Event
     }
 
     /**
-     * Set status of event
+     * Set status of event.
      *
      * @param int Status of event
      *
@@ -219,6 +217,5 @@ class Event
         $this->status = $status;
 
         return $this;
-    } 
+    }
 }
-

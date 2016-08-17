@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Mine;
@@ -35,13 +34,12 @@ use Symfony\Component\HttpFoundation\Request;
  * @license   http://www.gnu.org/licenses/   GPLv3
  *
  * @link      https://www.eco4.io
- *
  */
 class DefaultController extends Controller
 {
     /**
-     * Default route
-     * 
+     * Default route.
+     *
      * @Route("/", name="homepage")
      * @Method("GET")
      */
@@ -49,7 +47,7 @@ class DefaultController extends Controller
     {
         $engine = $this->get('app.engine');
         $engine->updateAll();
-        
+
         $entityManager = $this->getDoctrine()->getManager();
         $mines = $entityManager->getRepository(Mine::class)->findAll();
 
@@ -58,7 +56,7 @@ class DefaultController extends Controller
                 'mines' => $mines,
         ]);
     }
-    
+
     /**
      * Upgrade level of mine.
      *
@@ -67,6 +65,5 @@ class DefaultController extends Controller
      */
     public function upgradeAction(Mine $mine)
     {
-        
     }
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
@@ -54,7 +54,7 @@ class Mine
      * @ORM\Column(name="level", type="smallint")
      */
     private $level;
-    
+
     /**
      * @var float
      *
@@ -104,9 +104,8 @@ class Mine
      */
     private $lastUpdate;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -116,21 +115,21 @@ class Mine
     }
 
     /**
-     * Upgrade level of mine
+     * Upgrade level of mine.
      *
      * @return Mine
      */
     public function upgrade(): Mine
     {
-        $this->level++;
+        ++$this->level;
 
         return $this;
     }
-    
+
     /**
-     * Set level
+     * Set level.
      *
-     * @param integer $level
+     * @param int $level
      *
      * @return Mine
      */
@@ -140,9 +139,9 @@ class Mine
 
         return $this;
     }
-    
+
     /**
-     * Get level
+     * Get level.
      *
      * @return int
      */
@@ -152,7 +151,7 @@ class Mine
     }
 
     /**
-     * Set r1
+     * Set r1.
      *
      * @param float $r1
      *
@@ -166,7 +165,7 @@ class Mine
     }
 
     /**
-     * Get r1
+     * Get r1.
      *
      * @return float
      */
@@ -176,7 +175,7 @@ class Mine
     }
 
     /**
-     * Set r2
+     * Set r2.
      *
      * @param float $r2
      *
@@ -190,7 +189,7 @@ class Mine
     }
 
     /**
-     * Get r2
+     * Get r2.
      *
      * @return float
      */
@@ -200,7 +199,7 @@ class Mine
     }
 
     /**
-     * Set r3
+     * Set r3.
      *
      * @param float $r3
      *
@@ -214,7 +213,7 @@ class Mine
     }
 
     /**
-     * Get r3
+     * Get r3.
      *
      * @return float
      */
@@ -224,9 +223,9 @@ class Mine
     }
 
     /**
-     * Set r1Factor
+     * Set r1Factor.
      *
-     * @param integer $r1Factor
+     * @param int $r1Factor
      *
      * @return Mine
      */
@@ -238,7 +237,7 @@ class Mine
     }
 
     /**
-     * Get r1Factor
+     * Get r1Factor.
      *
      * @return int
      */
@@ -248,9 +247,9 @@ class Mine
     }
 
     /**
-     * Set r2Factor
+     * Set r2Factor.
      *
-     * @param integer $r2Factor
+     * @param int $r2Factor
      *
      * @return Mine
      */
@@ -262,7 +261,7 @@ class Mine
     }
 
     /**
-     * Get r2Factor
+     * Get r2Factor.
      *
      * @return int
      */
@@ -272,9 +271,9 @@ class Mine
     }
 
     /**
-     * Set r3Factor
+     * Set r3Factor.
      *
-     * @param integer $r3Factor
+     * @param int $r3Factor
      *
      * @return Mine
      */
@@ -286,7 +285,7 @@ class Mine
     }
 
     /**
-     * Get r3Factor
+     * Get r3Factor.
      *
      * @return int
      */
@@ -296,7 +295,7 @@ class Mine
     }
 
     /**
-     * Set lastUpdate
+     * Set lastUpdate.
      *
      * @param DateTime $lastUpdate
      *
@@ -310,7 +309,7 @@ class Mine
     }
 
     /**
-     * Get lastUpdate
+     * Get lastUpdate.
      *
      * @return DateTime
      */
@@ -318,30 +317,28 @@ class Mine
     {
         return $this->lastUpdate;
     }
-    
+
     /**
      * Update resources.
      *
      * @param DateTime $dateTime Date time (Optional)
-     * 
-     * @return void
      */
     public function refresh(DateTime $dateTime)
-    {     
+    {
         $period = (
             $dateTime->format('U') - $this->getLastUpdate()->format('U')
         ) / 3600;
 
         $prodByLevel = 5 * $this->getLevel() * 1.1 ^ $this->getLevel();
-        
+
         $coefR1 = $prodByLevel * $this->getR1Factor() / 100;
         $coefR2 = $prodByLevel * $this->getR2Factor() / 100;
         $coefR3 = $prodByLevel * $this->getR3Factor() / 100;
-        
+
         $this->setR1($this->getR1() + $period * $coefR1);
         $this->setR2($this->getR2() + $period * $coefR2);
         $this->setR3($this->getR3() + $period * $coefR3);
-        
+
         $this->setLastUpdate($dateTime);
     }
 }

@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -31,7 +30,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @license   http://www.gnu.org/licenses/   GPLv3
  *
  * @link      https://www.eco4.io
- *
  */
 class AppBundle extends Bundle
 {

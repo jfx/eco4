@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace AppBundle\Service;
 
@@ -59,16 +59,14 @@ class EngineService
     public function updateAll()
     {
         $dateTime = new DateTime();
-        
+
         $mines = $this->em->getRepository(Mine::class)->findAll();
 
         foreach ($mines as $mine) {
-            
             $events = $this->em->getRepository(Event::class)
                 ->findPlannedEventByObjectBetween(Event::OT_MINE, $mine->getId(), $mine->getLastUpdate(), $dateTime);
-            
+
             foreach ($events as $event) {
-                
                 if ($event->getStatus() == Event::STATUS_PLANNED) {
                     $mine->refresh($event->getEventDatetime());
                     if ($event->getCategory() == Event::CAT_UPGRADE) {
@@ -79,9 +77,9 @@ class EngineService
                 }
             }
             $mine->refresh($dateTime);
-            
+
             $this->em->persist($mine);
             $this->em->flush();
-        }        
+        }
     }
 }
