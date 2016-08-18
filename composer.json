@@ -37,7 +37,9 @@
         "symfony/phpunit-bridge": "^3.0",
         "jakub-onderka/php-parallel-lint": "*",
         "jakub-onderka/php-console-highlighter": "*",
-        "friendsofphp/php-cs-fixer": "*"
+        "friendsofphp/php-cs-fixer": "*",
+        "squizlabs/php_codesniffer": "2.*",
+        "escapestudios/symfony2-coding-standard": "~2.0"
     },
     "scripts": {
         "post-install-cmd": [
