@@ -16,8 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+declare(strict_types=1);
+
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\AbstractBuilding;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 
@@ -37,19 +40,20 @@ class EventRepository extends EntityRepository
     /**
      * Get all events for an object.
      *
-     * @param Release $rls The release
+     * @param Building $building
+     * @param DateTime $to       The limit
      *
-     * @return array List of baselines
+     * @return array List of events
      */
-    public function findPlannedEventByObjectBetween(int $type, int $id, DateTime $from, DateTime $to)
+    public function findPlannedEventByBuildingBetween(AbstractBuilding $building, DateTime $to)
     {
         $qb = $this->createQueryBuilder('e')
             ->where('e.objectType = :objectType')
             ->andWhere('e.objectId = :objectId')
             ->andWhere('e.eventDatetime between :from and :to')
-            ->setParameter('objectType', $type)
-            ->setParameter('objectId', $id)
-            ->setParameter('from', $from)
+            ->setParameter('objectType', $building->getType())
+            ->setParameter('objectId', $building->getId())
+            ->setParameter('from', $building->getLastUpdate())
             ->setParameter('to', $to)
             ->orderBy('e.eventDatetime', 'ASC');
 

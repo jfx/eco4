@@ -64,7 +64,7 @@ class EngineService
 
         foreach ($mines as $mine) {
             $events = $this->em->getRepository(Event::class)
-                ->findPlannedEventByObjectBetween(Event::OT_MINE, $mine->getId(), $mine->getLastUpdate(), $dateTime);
+                ->findPlannedEventByBuildingBetween($mine, $dateTime);
 
             foreach ($events as $event) {
                 if ($event->getStatus() == Event::STATUS_PLANNED) {

@@ -37,24 +37,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="echo_mine")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MineRepository")
  */
-class Mine
+class Mine extends AbstractBuilding
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="level", type="smallint")
-     */
-    private $level;
-
     /**
      * @var float
      *
@@ -96,59 +80,6 @@ class Mine
      * @ORM\Column(name="r3Factor", type="smallint")
      */
     private $r3Factor;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="lastUpdate", type="datetime")
-     */
-    private $lastUpdate;
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * Upgrade level of mine.
-     *
-     * @return Mine
-     */
-    public function upgrade(): Mine
-    {
-        ++$this->level;
-
-        return $this;
-    }
-
-    /**
-     * Set level.
-     *
-     * @param int $level
-     *
-     * @return Mine
-     */
-    public function setLevel(int $level): Mine
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level.
-     *
-     * @return int
-     */
-    public function getLevel(): int
-    {
-        return $this->level;
-    }
 
     /**
      * Set r1.
@@ -295,27 +226,13 @@ class Mine
     }
 
     /**
-     * Set lastUpdate.
-     *
-     * @param DateTime $lastUpdate
-     *
-     * @return Mine
-     */
-    public function setLastUpdate(DateTime $lastUpdate): Mine
-    {
-        $this->lastUpdate = $lastUpdate;
-
-        return $this;
-    }
-
-    /**
      * Get lastUpdate.
      *
      * @return DateTime
      */
-    public function getLastUpdate(): DateTime
+    public function getType(): int
     {
-        return $this->lastUpdate;
+        return Event::OT_MINE;
     }
 
     /**

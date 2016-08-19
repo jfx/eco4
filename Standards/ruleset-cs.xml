@@ -3,6 +3,7 @@
     <description>Eco4 coding standard</description>
 
     <rule ref="../vendor/escapestudios/symfony2-coding-standard/Symfony2/">
+        <exclude name="Symfony2.WhiteSpace.AssignmentSpacing.Invalid"/>
     </rule>
     
     <!-- Use Unix newlines -->

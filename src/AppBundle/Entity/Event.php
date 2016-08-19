@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use DateTime;
@@ -94,7 +96,7 @@ class Event
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -106,7 +108,7 @@ class Event
      *
      * @return Event
      */
-    public function setCategory($category)
+    public function setCategory(int $category): Event
     {
         $this->category = $category;
 
@@ -118,7 +120,7 @@ class Event
      *
      * @return int
      */
-    public function getCategory()
+    public function getCategory(): int
     {
         return $this->category;
     }
@@ -126,11 +128,11 @@ class Event
     /**
      * Set type of object.
      *
-     * @param int Type of object
+     * @param int $type Type of object
      *
      * @return Event
      */
-    public function setObjectType($type)
+    public function setObjectType(int $type): Event
     {
         $this->objectType = $type;
 
@@ -142,7 +144,7 @@ class Event
      *
      * @return int
      */
-    public function getObjectType()
+    public function getObjectType(): int
     {
         return $this->objectType;
     }
@@ -154,7 +156,7 @@ class Event
      *
      * @return Event
      */
-    public function setObjectId($id)
+    public function setObjectId(int $id): Event
     {
         $this->objectId = $id;
 
@@ -166,7 +168,7 @@ class Event
      *
      * @return int
      */
-    public function getObjectId()
+    public function getObjectId(): int
     {
         return $this->objectId;
     }
@@ -178,7 +180,7 @@ class Event
      *
      * @return Event
      */
-    public function setEventDatetime($datetime)
+    public function setEventDatetime(DateTime $datetime): Event
     {
         $this->eventDatetime = $datetime;
 
@@ -190,7 +192,7 @@ class Event
      *
      * @return DateTime
      */
-    public function getEventDatetime()
+    public function getEventDatetime(): DateTime
     {
         return $this->eventDatetime;
     }
@@ -200,7 +202,7 @@ class Event
      *
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -208,11 +210,11 @@ class Event
     /**
      * Set status of event.
      *
-     * @param int Status of event
+     * @param int $status Status of event
      *
      * @return Event
      */
-    public function setStatus($status)
+    public function setStatus(int $status): Event
     {
         $this->status = $status;
 

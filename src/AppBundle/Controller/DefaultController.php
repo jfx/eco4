@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+declare(strict_types=1);
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Mine;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Default controller class.
@@ -40,10 +41,12 @@ class DefaultController extends Controller
     /**
      * Default route.
      *
+     * @return Response A Response instance
+     *
      * @Route("/", name="homepage")
      * @Method("GET")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $engine = $this->get('app.engine');
         $engine->updateAll();
@@ -52,13 +55,18 @@ class DefaultController extends Controller
         $mines = $entityManager->getRepository(Mine::class)->findAll();
 
         return $this->render(
-            'default/index.html.twig', [
-                'mines' => $mines,
-        ]);
+            'default/index.html.twig',
+            ['mines' => $mines]
+        );
     }
 
     /**
      * Upgrade level of mine.
+     *
+     *
+     * @param Mine $mine The mine to upgrade
+     *
+     * @return Response A Response instance
      *
      * @Route("/{id}", requirements={"id": "\d+"}, name="mine_upgrade")
      * @Method("GET")
