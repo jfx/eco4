@@ -1,5 +1,8 @@
 // This build is parameterized :
 // - PROJECT_PATH : string parameter
+//Jenkins plugins :
+// - Static Analysis Utilities + checkstyle plugin
+// - pmd plugin
 node {
     def workspace = pwd()
     
@@ -24,15 +27,11 @@ node {
         
     stage 'Check'
         dir("${PROJECT_PATH}") {
-            sh 'vendor/bin/php-cs-fixer fix --config=sf23 .'
+            sh 'vendor/bin/php-cs-fixer fix --config=sf23 --fixers=-declare_equal_normalize . || true'
             sh 'vendor/bin/parallel-lint src/'
-            sh "vendor/bin/phpcs -v --report=checkstyle --report-file=${workspace}/build/logs/checkstyle.xml --standard=Standards/ruleset-cs.xml --extensions=php src/ || true"
+            sh "vendor/bin/phpcs -v --ignore=src/AppBundle/Tests/* --report=checkstyle --report-file=${workspace}/build/logs/checkstyle.xml --standard=Standards/ruleset-cs.xml --extensions=php src/"
+            sh "vendor/bin/phpmd src/ xml Standards/ruleset-pmd.xml --reportfile ${workspace}/build/logs/pmd.xml --exclude DataFixtures,Tests || true"
         }
-        archiveCheckstyleResults()
-}
-
-def archiveCheckstyleResults() {
-    step([$class: 'CheckStylePublisher',
-        pattern: "build/logs/checkstyle.xml"
-    ])
+        step([$class: 'CheckStylePublisher', pattern: 'build/logs/checkstyle.xml'])
+        step([$class: 'PmdPublisher', pattern: 'build/logs/pmd.xml'])
 }
