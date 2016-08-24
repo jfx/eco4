@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Event;
 use AppBundle\Entity\Mine;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -35,7 +36,7 @@ use Doctrine\ORM\EntityManager;
  *
  * @link      https://www.eco4.io
  */
-class EngineService
+class MineService
 {
     /**
      * @var EntityManager Entity manager
@@ -43,33 +44,40 @@ class EngineService
     protected $em;
 
     /**
-     * @var MineService Mine service
-     */
-    protected $mineService;
-
-    /**
      * Constructor.
      *
      * @param EntityManager $entityManager The entity manager
-     * @param MineService   $mineService   The mine service
      */
-    public function __construct(EntityManager $entityManager, MineService $mineService)
+    public function __construct(EntityManager $entityManager)
     {
         $this->em = $entityManager;
-        $this->mineService = $mineService;
     }
 
     /**
-     * Update all.
+     * Update mine.
+     *
+     * @param Mine     $mine     The mine to update
+     * @param DateTime $dateTime The datetime to update to
      */
-    public function updateAll()
+    public function update(Mine $mine, DateTime $dateTime)
     {
-        $dateTime = new DateTime();
+        $events = $this->em->getRepository(Event::class)
+            ->findPlannedEventByBuildingBetween($mine, $dateTime);
 
-        $mines = $this->em->getRepository(Mine::class)->findAll();
+        foreach ($events as $event) {
+            if ($event->getStatus() == Event::STATUS_PLANNED) {
+                $mine->refresh($event->getEventDatetime());
 
-        foreach ($mines as $mine) {
-            $this->mineService->update($mine, $dateTime);
+                if ($event->getCategory() == Event::CAT_UPGRADE) {
+                    $mine->upgrade();
+                }
+                $event->setStatus(Event::STATUS_DONE);
+                $this->em->persist($event);
+            }
         }
+        $mine->refresh($dateTime);
+
+        $this->em->persist($mine);
+        $this->em->flush();
     }
 }

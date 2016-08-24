@@ -53,7 +53,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
         $dataArray = array(
             array(
                 'level' => 1,
-                'r1' => 0,
+                'r1' => 10,
                 'r2' => 0,
                 'r3' => 0,
                 'r1Factor' => 100,

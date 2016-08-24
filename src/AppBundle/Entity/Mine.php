@@ -34,7 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @link      https://www.eco4.io
  *
- * @ORM\Table(name="echo_mine")
+ * @ORM\Table(name="eco4_mine")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MineRepository")
  */
 class Mine extends AbstractBuilding
@@ -236,25 +236,41 @@ class Mine extends AbstractBuilding
     }
 
     /**
+     * Get the production index for a level.
+     *
+     * @return float
+     */
+    public function getProdLevelIndex(): float
+    {
+        return 5 * $this->getLevel() * 1.1 ^ $this->getLevel();
+    }
+
+    /**
+     * Get the production of resource on a period.
+     *
+     * @param DateTime $from     Beginning of period
+     * @param DateTime $to       End of period
+     * @param int      $rxFactor Factor of production of resource
+     *
+     * @return float
+     */
+    public function getProdRxOnPeriod(DateTime $from, DateTime $to, int $rxFactor): float
+    {
+        $period = ($to->format('U') - $from->format('U')) / 3600;
+
+        return $period * $this->getProdLevelIndex() * $rxFactor / 100;
+    }
+
+    /**
      * Update resources.
      *
-     * @param DateTime $dateTime Date time (Optional)
+     * @param DateTime $dateTime Date time
      */
     public function refresh(DateTime $dateTime)
     {
-        $period = (
-            $dateTime->format('U') - $this->getLastUpdate()->format('U')
-        ) / 3600;
-
-        $prodByLevel = 5 * $this->getLevel() * 1.1 ^ $this->getLevel();
-
-        $coefR1 = $prodByLevel * $this->getR1Factor() / 100;
-        $coefR2 = $prodByLevel * $this->getR2Factor() / 100;
-        $coefR3 = $prodByLevel * $this->getR3Factor() / 100;
-
-        $this->setR1($this->getR1() + $period * $coefR1);
-        $this->setR2($this->getR2() + $period * $coefR2);
-        $this->setR3($this->getR3() + $period * $coefR3);
+        $this->setR1($this->getR1() + $this->getProdRxOnPeriod($this->getLastUpdate(), $dateTime, $this->getR1Factor()));
+        $this->setR2($this->getR2() + $this->getProdRxOnPeriod($this->getLastUpdate(), $dateTime, $this->getR2Factor()));
+        $this->setR3($this->getR3() + $this->getProdRxOnPeriod($this->getLastUpdate(), $dateTime, $this->getR3Factor()));
 
         $this->setLastUpdate($dateTime);
     }

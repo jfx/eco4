@@ -34,4 +34,11 @@ node {
         }
         step([$class: 'CheckStylePublisher', pattern: 'build/logs/checkstyle.xml'])
         step([$class: 'PmdPublisher', pattern: 'build/logs/pmd.xml'])
+
+    stage 'Test'
+        dir("${PROJECT_PATH}") {
+            sh "vendor/bin/phpunit --log-junit ${workspace}/build/logs/phpunit-junit.xml"
+        }
+        junit 'build/logs/phpunit-junit.xml'
+
 }

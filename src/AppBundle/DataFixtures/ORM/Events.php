@@ -51,18 +51,18 @@ class Events extends AbstractFixture implements OrderedFixtureInterface
         $refDate->setDate(2016, 8, 2)->setTime(0, 0, 1);
         $dataArray = array(
             array(
-                'category' => 1,
-                'type' => 1,
+                'category' => Event::CAT_UPGRADE,
+                'type' => Event::OT_MINE,
                 'objectId' => 6,
                 'datetime' => $refDate,
-                'status' => 1,
+                'status' => Event::STATUS_PLANNED,
             ),
             array(
-                'category' => 1,
-                'type' => 1,
+                'category' => Event::CAT_UPGRADE,
+                'type' => Event::OT_MINE,
                 'objectId' => 7,
                 'datetime' => $refDate,
-                'status' => 3,
+                'status' => Event::STATUS_CANCELED,
             ),
         );
         $objectList = array();

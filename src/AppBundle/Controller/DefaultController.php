@@ -59,19 +59,4 @@ class DefaultController extends Controller
             ['mines' => $mines]
         );
     }
-
-    /**
-     * Upgrade level of mine.
-     *
-     *
-     * @param Mine $mine The mine to upgrade
-     *
-     * @return Response A Response instance
-     *
-     * @Route("/{id}", requirements={"id": "\d+"}, name="mine_upgrade")
-     * @Method("GET")
-     */
-    public function upgradeAction(Mine $mine)
-    {
-    }
 }

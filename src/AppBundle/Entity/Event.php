@@ -34,7 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @link      https://www.eco4.io
  *
- * @ORM\Table(name="echo_event")
+ * @ORM\Table(name="eco4_event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
  */
 class Event

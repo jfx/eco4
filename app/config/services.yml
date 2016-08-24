@@ -8,7 +8,10 @@ services:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
+    app.mine:
+        class: AppBundle\Service\MineService
+        arguments: [ '@doctrine.orm.entity_manager' ]
     app.engine:
         class: AppBundle\Service\EngineService
-        arguments: [ '@doctrine.orm.entity_manager' ]
+        arguments: [ '@doctrine.orm.entity_manager', '@app.mine' ]
 
