@@ -166,6 +166,9 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
             $objectList[$i]->setLastUpdate($data['lastUpdate']);
 
             $manager->persist($objectList[$i]);
+            $id = $i + 1;
+            $ref = 'mine'.$id.'-mine';
+            $this->addReference($ref, $objectList[$i]);
         }
         $manager->flush();
     }

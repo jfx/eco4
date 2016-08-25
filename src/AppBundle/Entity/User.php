@@ -18,16 +18,13 @@
  */
 declare(strict_types=1);
 
-namespace AppBundle\Controller;
+namespace AppBundle\Entity;
 
-use AppBundle\Entity\Mine;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
- * Default controller class.
+ * User entity class.
  *
  * @category  Eco4 App
  *
@@ -36,29 +33,56 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @license   http://www.gnu.org/licenses/   GPLv3
  *
  * @link      https://www.eco4.io
+ *
+ * @ORM\Table(name="eco4_user")
+ * @ORM\Entity
  */
-class DefaultController extends Controller
+class User extends BaseUser
 {
     /**
-     * Default route.
+     * @var int
      *
-     * @return Response A Response instance
-     *
-     * @Route("/home", name="homepage")
-     * @Security("has_role('ROLE_USER')")
-     * @Method("GET")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public function indexAction()
+    protected $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Mine", cascade={"remove", "persist"})
+     */
+    protected $mine;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
     {
-        $engine = $this->get('app.engine');
-        $engine->updateAll();
+        parent::__construct();
+        $this->mine = new Mine();
+    }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $mines = $entityManager->getRepository(Mine::class)->findAll();
+    /**
+     * Set mine.
+     *
+     * @param Mine $mine
+     *
+     * @return User
+     */
+    public function setMine(Mine $mine): User
+    {
+        $this->mine = $mine;
 
-        return $this->render(
-            'default/index.html.twig',
-            ['mines' => $mines]
-        );
+        return $this;
+    }
+
+    /**
+     * Get mine of user.
+     *
+     * @return Mine
+     */
+    public function getMine(): Mine
+    {
+        return $this->mine;
     }
 }
