@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% block header %}{% endblock %}
+    
+{% block body %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+    <div id="login-overlay" class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Login to eco4.io</h4>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-xs-6">
+                      <div class="well">
+                          <form action="{{ path("fos_user_security_check") }}" method="post">
+                              <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                              
+                              <div class="form-group">
+                                  <label for="username" class="control-label">{{ 'security.login.username'|trans }}</label>
+                                  <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" title="Please enter you username" placeholder="example@gmail.com"/>
+                                  <span class="help-block"></span>
+                              </div>
+                              <div class="form-group">
+                                  <label for="password" class="control-label">{{ 'security.login.password'|trans }}</label>
+                                  <input type="password" class="form-control" id="password" name="_password" value="" required="required" title="Please enter your password">
+                                  <span class="help-block"></span>
+                              </div>
+                              <div class="checkbox">
+                                  <label>
+                                      <input type="checkbox" name="remember" id="remember" value="on"> {{ 'security.login.remember_me'|trans }}
+                                  </label>
+                                  <p class="help-block">(if this is a private computer)</p>
+                              </div>
+                              <button type="submit" class="btn btn-success btn-block" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+                              <a href="/forgot/" class="btn btn-default btn-block">Help to login</a>
+                          </form>
+                      </div>
+                  </div>
+                  <div class="col-xs-6">
+                      <p class="lead">Play now for <span class="text-success">FREE</span></p>
+                      <ul class="list-unstyled" style="line-height: 2">
+                          <li><span class="fa fa-check text-success"></span> Online persitant multi-players world</li>
+                          <li><span class="fa fa-check text-success"></span> Easy interactive game</li>
+                          <li><span class="fa fa-check text-success"></span> Resources and market management</li>
+                          <li><span class="fa fa-check text-success"></span> Web and mobile interfaces</li>
+                          <li><span class="fa fa-check text-success"></span> Free and Open source</li>
+                          <li><a href="/read-more/"><u>Read more</u></a></li>
+                      </ul>
+                      <p><a href="/new-customer/" class="btn btn-info btn-block">Yes please, register now!</a></p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+{% endblock body %}

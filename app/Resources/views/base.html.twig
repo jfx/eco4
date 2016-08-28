@@ -2,12 +2,127 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>{% block title %}Eco4{% endblock %}</title>
+        
+        {% block stylesheets %}
+            {% stylesheets filter="scssphp" output="css/app.css"
+                "%kernel.root_dir%/Resources/assets/scss/bootstrap-flatly.scss"
+                "%kernel.root_dir%/Resources/assets/css/*.css"
+                "%kernel.root_dir%/Resources/assets/scss/main.scss"
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+    <body id="{% block body_id %}1{% endblock %}">
+
+        {% block header %}
+            <header>
+                <div class="navbar navbar-default navbar-static-top" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="{{ path('homepage') }}">
+                                eco4
+                            </a>
+
+                            <button type="button" class="navbar-toggle"
+                                    data-toggle="collapse"
+                                    data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a href="{{ path('homepage') }}">
+                                            <i class="fa fa-home"></i> Dashboard
+                                        </a>
+                                    </li>
+
+                                    
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-globe"></i> Places<span class="caret"></span></a>
+                                    <ul class="dropdown-menu locales" role="menu">
+                                        <i class="fa fa-home"></i> Mine
+                                        <i class="fa fa-home"></i> Factory
+                                        <i class="fa fa-home"></i> Power plant
+                                        <i class="fa fa-home"></i> Market place
+                                        <i class="fa fa-home"></i> University
+                                        <i class="fa fa-home"></i> Transport
+                                    </ul>
+                                </li>
+                                
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="{{ path('homepage') }}">
+                                            <i class="fa fa-lock"></i> {{ 'menu.admin'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% if app.user %}
+                                    <li>
+                                        <a href="{{ path('fos_user_security_logout') }}">
+                                            <i class="fa fa-sign-out"></i> Logout
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        <div class="container body-container">
+            {% block body %}
+                <div class="row">
+                    <div id="main" class="col-sm-9">
+                        {{ include('default/_flash_messages.html.twig') }}
+
+                        {% block main %}{% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block footer %}
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div id="footer-copyright" class="col-md-6">
+                            <p>&copy; {{ 'now'|date('Y') }} - Eco4</p>
+                        </div>
+                        <div id="footer-resources" class="col-md-6">
+                            <p>
+                                <a href="https://eco4.io/blog/"><i class="fa fa-rss"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+
+        {% block javascripts %}
+        {# uncomment the following lines to combine and minimize JavaScript assets with Assetic
+            {% javascripts filter="?jsqueeze" output="js/app.js"
+                "%kernel.root_dir%/Resources/assets/js/jquery-2.1.4.js"
+                "%kernel.root_dir%/Resources/assets/js/moment.min.js"
+                "%kernel.root_dir%/Resources/assets/js/bootstrap-3.3.4.js"
+                "%kernel.root_dir%/Resources/assets/js/highlight.pack.js"
+                "%kernel.root_dir%/Resources/assets/js/bootstrap-datetimepicker.min.js"
+                "%kernel.root_dir%/Resources/assets/js/main.js" %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        #}
+        {% endblock %}
     </body>
 </html>
