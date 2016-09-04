@@ -8,6 +8,7 @@
         {% block stylesheets %}
             {% stylesheets filter="scssphp" output="css/app.css"
                 "%kernel.root_dir%/Resources/assets/scss/bootstrap-flatly.scss"
+                "%kernel.root_dir%/Resources/assets/scss/font-awesome/font-awesome.scss"
                 "%kernel.root_dir%/Resources/assets/css/*.css"
                 "%kernel.root_dir%/Resources/assets/scss/main.scss"
             %}
@@ -18,7 +19,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
 
-    <body id="{% block body_id %}1{% endblock %}">
+    <body {% block body_id %}id="1"{% endblock %}>
 
         {% block header %}
             <header>
@@ -26,7 +27,8 @@
                     <div class="container">
                         <div class="navbar-header">
                             <a class="navbar-brand" href="{{ path('homepage') }}">
-                                eco4
+                                <img alt="Brand" src="/images/eco4-invert.png"  height="30" width="30" style="display: inline-block;">
+                                <span style="display: inline-block;">eco4.io</span>                               
                             </a>
 
                             <button type="button" class="navbar-toggle"
@@ -98,14 +100,7 @@
             <footer>
                 <div class="container">
                     <div class="row">
-                        <div id="footer-copyright" class="col-md-6">
-                            <p>&copy; {{ 'now'|date('Y') }} - Eco4</p>
-                        </div>
-                        <div id="footer-resources" class="col-md-6">
-                            <p>
-                                <a href="https://eco4.io/blog/"><i class="fa fa-rss"></i></a>
-                            </p>
-                        </div>
+                        <p><a href="https://eco4.io">eco4.io v x.y.z - bbb &copy; {{ 'now'|date('Y') }}</a></p>
                     </div>
                 </div>
             </footer>

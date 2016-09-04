@@ -1,7 +1,55 @@
-/*!
- *  Symfony Demo Application by @symfony
- *  License: MIT License
- */
-
+// Flatly variables
 @import "bootswatch-flatly/variables";
 
+body { 
+    background-image: url('../images/bg-light.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.body-id { 
+    background-image: url('../images/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+ 
+.body-container {
+    -webkit-flex: 1;
+    flex: 1;
+
+    // needed to prevent pages with a very small height and browsers not supporting flex
+    min-height: 600px;
+
+    #main h1,
+    #main h2 {
+        margin-top: 0;
+    }
+}
+
+.navbar-brand {
+    padding: 0px; /* firefox bug fix */
+}
+.navbar-brand>img {
+    height: 100%;
+    padding: 15px; /* firefox bug fix */
+    width: auto;
+}
+
+.footer > p {
+    text-align: center;
+}
+
+// Footer
+footer {
+//    background: $gray-lighter;
+    margin-top: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    p {
+//        color: $gray-dark;
+        text-align: center;
+        font-size: $font-size-small;
+        margin-bottom: .25em;
+    }
+}

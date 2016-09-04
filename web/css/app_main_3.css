@@ -1,4 +1,1 @@
-/*
- *  Symfony Demo Application by @symfony
- *  License: MIT License
- */
+body{background-image:url('../images/bg-light.jpg');background-size:cover;background-repeat:no-repeat}.body-id{background-image:url('../images/bg.jpg');background-size:cover;background-repeat:no-repeat}.body-container{-webkit-flex:1;flex:1;min-height:600px}.body-container #main h1,.body-container #main h2{margin-top:0}.navbar-brand{padding:0px;}.navbar-brand > img{height:100%;padding:15px;width:auto}.footer > p{text-align:center}footer{margin-top:1em;padding-top:1em;padding-bottom:1em}footer p{text-align:center;font-size:13px;margin-bottom:0.25em}
