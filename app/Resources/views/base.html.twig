@@ -44,7 +44,7 @@
                             <ul class="nav navbar-nav navbar-right">
                                     <li>
                                         <a href="{{ path('homepage') }}">
-                                            <i class="fa fa-home"></i> Dashboard
+                                            <i class="fa fa-dashboard"></i> Dashboard
                                         </a>
                                     </li>
 
@@ -63,13 +63,18 @@
                                 
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li>
-                                        <a href="{{ path('homepage') }}">
-                                            <i class="fa fa-lock"></i> {{ 'menu.admin'|trans }}
+                                        <a href="{{ path('admin') }}">
+                                            <i class="fa fa-lock"></i> Admin
                                         </a>
                                     </li>
                                 {% endif %}
 
                                 {% if app.user %}
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user"></i> Profile
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ path('fos_user_security_logout') }}">
                                             <i class="fa fa-sign-out"></i> Logout

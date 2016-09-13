@@ -226,6 +226,36 @@ class Mine extends AbstractBuilding
     }
 
     /**
+     * Get production of r1 per hour.
+     *
+     * @return float
+     */
+    public function getProdR1PerHour(): float
+    {
+        return $this->getProdRxPerHour($this->getR1Factor());
+    }
+
+    /**
+     * Get production of r2 per hour.
+     *
+     * @return float
+     */
+    public function getProdR2PerHour(): float
+    {
+        return $this->getProdRxPerHour($this->getR2Factor());
+    }
+
+    /**
+     * Get production of r3 per hour.
+     *
+     * @return float
+     */
+    public function getProdR3PerHour(): float
+    {
+        return $this->getProdRxPerHour($this->getR3Factor());
+    }
+
+    /**
      * Get lastUpdate.
      *
      * @return DateTime
@@ -258,7 +288,19 @@ class Mine extends AbstractBuilding
     {
         $period = ($to->format('U') - $from->format('U')) / 3600;
 
-        return $period * $this->getProdLevelIndex() * $rxFactor / 100;
+        return $period * $this->getProdRxPerHour($rxFactor);
+    }
+
+    /**
+     * Get the production of resource on a period.
+     *
+     * @param int $rxFactor Factor of production of resource
+     *
+     * @return float
+     */
+    public function getProdRxPerHour(int $rxFactor): float
+    {
+        return $this->getProdLevelIndex() * $rxFactor / 100;
     }
 
     /**

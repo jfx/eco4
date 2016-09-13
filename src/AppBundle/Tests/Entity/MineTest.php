@@ -89,6 +89,55 @@ class MineTest extends KernelDbTestCase
         $this->assertEquals($index100, $mine->getProdLevelIndex());
     }
 
+    public function testGetProdRxPerHourIndex()
+    {
+        $mine = $this->entityManager->getRepository(Mine::class)->find(1);
+
+        $prodRxPH100 = $mine->getProdLevelIndex();
+        $this->assertEquals($prodRxPH100, $mine->getProdRxPerHour(100));
+
+        $prodRxPH50 = $mine->getProdLevelIndex() * 0.5;
+        $this->assertEquals($prodRxPH50, $mine->getProdRxPerHour(50));
+
+        $this->assertEquals(0, $mine->getProdRxPerHour(0));
+    }
+
+    public function testGetProdR1PerHour()
+    {
+        $mine = $this->entityManager->getRepository(Mine::class)->find(1);
+        $this->assertEquals($mine->getProdLevelIndex(), $mine->getProdR1PerHour());
+
+        $mine2 = $this->entityManager->getRepository(Mine::class)->find(2);
+        $this->assertEquals(0, $mine2->getProdR1PerHour());
+
+        $mine3 = $this->entityManager->getRepository(Mine::class)->find(3);
+        $this->assertEquals(0, $mine3->getProdR1PerHour());
+    }
+
+    public function testGetProdR2PerHour()
+    {
+        $mine = $this->entityManager->getRepository(Mine::class)->find(1);
+        $this->assertEquals(0, $mine->getProdR2PerHour());
+
+        $mine2 = $this->entityManager->getRepository(Mine::class)->find(2);
+        $this->assertEquals($mine2->getProdLevelIndex(), $mine2->getProdR2PerHour());
+
+        $mine3 = $this->entityManager->getRepository(Mine::class)->find(3);
+        $this->assertEquals(0, $mine3->getProdR2PerHour());
+    }
+
+    public function testGetProdR3PerHour()
+    {
+        $mine = $this->entityManager->getRepository(Mine::class)->find(1);
+        $this->assertEquals(0, $mine->getProdR3PerHour());
+
+        $mine2 = $this->entityManager->getRepository(Mine::class)->find(2);
+        $this->assertEquals(0, $mine2->getProdR3PerHour());
+
+        $mine3 = $this->entityManager->getRepository(Mine::class)->find(3);
+        $this->assertEquals($mine3->getProdLevelIndex(), $mine3->getProdR3PerHour());
+    }
+
     public function testGetProdRxOnPeriodWithDifferentFactor()
     {
         $mine = $this->entityManager->getRepository(Mine::class)->find(1);

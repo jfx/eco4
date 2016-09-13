@@ -3,50 +3,47 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
-            <div id="welcome">
-                <h1>Eco4 Game</h1>
-            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-cog"></i> Mine - Level : {{ mine.level }}</div>
+                        <ul class="list-group">
+                          <li class="list-group-item">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th><i class="fa fa-cubes"></i> Carbon</th>
+                                        <th><i class="fa fa-flask"></i> Methane</th>
+                                        <th><i class="fa fa-cloud"></i> Hydrogen</th>
+                                        <th><i class="fa fa-diamond"></i> Diamond</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Stock</td>
+                                        <td>{{ mine.r1|round }}</td>
+                                        <td>{{ mine.r2|round }}</td>
+                                        <td>{{ mine.r3|round }}</td>
+                                        <td> - </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Production</td>
+                                        <td>{{ mine.prodR1PerHour|round(1) }} / h</td>
+                                        <td>{{ mine.prodR2PerHour|round(1) }} / h</td>
+                                        <td>{{ mine.prodR3PerHour|round(1) }} / h</td>
+                                        <td> - </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </li>
+                          <li class="list-group-item"><a class="btn btn-default btn-xs" href="#" role="button">Upgrade</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">History</div>
 
-            <div id="status">
-                <p>
-                    Mines List :
-                </p>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Level</th>
-                <th>R1</th>
-                <th>R2</th>
-                <th>R3</th>
-                <th>Last update</th>
-                <th>R1 Factor</th>
-                <th>R2 Factor</th>
-                <th>R3 Factor</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for mine in mines %}
-            <tr>
-                <td>{{ mine.id }}</td>
-                <td>{{ mine.level }}</td>
-                <td>{{ mine.r1|round }}</td>
-                <td>{{ mine.r2|round }}</td>
-                <td>{{ mine.r3|round }}</td>
-                <td> {{ mine.lastUpdate|localizeddate('medium', 'medium') }} </td>
-                <td>{{ mine.r1Factor }}</td>
-                <td>{{ mine.r2Factor }}</td>
-                <td>{{ mine.r3Factor }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4" align="center">No mine found</td>
-           </tr>
-        {% endfor %}
-        </tbody>
-    </table>
             </div>
-
         </div>
     </div>
 {% endblock %}

@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\AbstractBuilding;
 use AppBundle\Entity\Mine;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -70,6 +71,20 @@ class EngineService
 
         foreach ($mines as $mine) {
             $this->mineService->update($mine, $dateTime);
+        }
+    }
+
+    /**
+     * Update a building.
+     *
+     * @param AbstractBuilding $building The building to update
+     */
+    public function update(AbstractBuilding $building)
+    {
+        $dateTime = new DateTime();
+
+        if ($building instanceof Mine) {
+            $this->mineService->update($building, $dateTime);
         }
     }
 }

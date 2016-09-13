@@ -18,7 +18,7 @@
  */
 declare(strict_types=1);
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\Mine;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -36,28 +36,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @license   http://www.gnu.org/licenses/   GPLv3
  *
  * @link      https://www.eco4.io
+ *
+ * @Route("/admin")
+ * @Security("has_role('ROLE_ADMIN')")
  */
-class DefaultController extends Controller
+class AdminController extends Controller
 {
     /**
      * Default route.
      *
      * @return Response A Response instance
      *
-     * @Route("/home", name="homepage")
-     * @Security("has_role('ROLE_USER')")
+     * @Route("/", name="admin")
      * @Method("GET")
      */
     public function indexAction()
     {
-        $mine = $this->getUser()->getMine();
-
         $engine = $this->get('app.engine');
-        $engine->update($mine);
+        $engine->updateAll();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $mines = $entityManager->getRepository(Mine::class)->findAll();
 
         return $this->render(
-            'default/index.html.twig',
-            ['mine' => $mine]
+            'admin/index.html.twig',
+            ['mines' => $mines]
         );
     }
 }
