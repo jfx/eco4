@@ -1,7 +1,8 @@
 {
     "name": "fxs/eco4",
-    "license": "GPLv3",
+    "license": "GPL-3.0",
     "type": "project",
+    "description": "eco4 game web application",
     "autoload": {
         "psr-4": {
             "": "src/"
