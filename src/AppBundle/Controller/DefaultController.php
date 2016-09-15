@@ -52,7 +52,7 @@ class DefaultController extends Controller
         $mine = $this->getUser()->getMine();
 
         $engine = $this->get('app.engine');
-        $engine->update($mine);
+        $engine->refresh($mine);
 
         return $this->render(
             'default/index.html.twig',

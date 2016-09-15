@@ -63,7 +63,7 @@ class EngineService
     /**
      * Update all.
      */
-    public function updateAll()
+    public function refreshAll()
     {
         $dateTime = new DateTime();
 
@@ -79,7 +79,7 @@ class EngineService
      *
      * @param AbstractBuilding $building The building to update
      */
-    public function update(AbstractBuilding $building)
+    public function refresh(AbstractBuilding $building)
     {
         $dateTime = new DateTime();
 

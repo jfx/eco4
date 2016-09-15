@@ -53,7 +53,7 @@ class AdminController extends Controller
     public function indexAction()
     {
         $engine = $this->get('app.engine');
-        $engine->updateAll();
+        $engine->refreshAll();
 
         $entityManager = $this->getDoctrine()->getManager();
         $mines = $entityManager->getRepository(Mine::class)->findAll();
