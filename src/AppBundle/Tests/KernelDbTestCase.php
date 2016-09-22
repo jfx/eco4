@@ -19,9 +19,10 @@ abstract class KernelDbTestCase extends KernelTestCase
         $this->application = new Application(self::$kernel);
         $this->application->setAutoExit(false);
 
-        $this->execute('doctrine:schema:drop --force');
-        $this->execute('doctrine:schema:create');
-        $this->execute('doctrine:fixtures:load -n');
+        $this->execute('doctrine:database:drop --force --no-interaction');
+        $this->execute('doctrine:database:create --no-interaction');
+        $this->execute('doctrine:schema:create --no-interaction');
+        $this->execute('doctrine:fixtures:load --no-interaction');
 
         $this->container = static::$kernel->getContainer();
 

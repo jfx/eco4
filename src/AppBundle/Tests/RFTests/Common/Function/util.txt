@@ -1,0 +1,18 @@
+*** Settings ***
+Library           Selenium2Library
+Library           OperatingSystem
+Resource          ../Conf/common.txt
+
+*** Keywords ***
+TestSetup
+    I reset database
+
+I reset database
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} doctrine:database:drop --force --no-interaction
+    Should Be Equal As Integers    ${rc}    0
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} doctrine:database:create --no-interaction
+    Should Be Equal As Integers    ${rc}    0
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} doctrine:schema:create --no-interaction
+    Should Be Equal As Integers    ${rc}    0
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} doctrine:fixtures:load --no-interaction
+    Should Be Equal As Integers    ${rc}    0

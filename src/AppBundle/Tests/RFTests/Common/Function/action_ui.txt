@@ -1,0 +1,10 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../Conf/common.txt
+
+*** Keywords ***
+I open browser on login page
+    Run Keyword If    ${REMOTE}    Open Browser    ${LOGIN_URL}    ${BROWSER}    remote_url=${HUB}    desired_capabilities=platform:${DC_OS},version:${DC_VERSION}
+    Run Keyword Unless    ${REMOTE}    Open Browser    ${LOGIN_URL}    ${BROWSER}    ff_profile_dir=${FF_PROFILE_DIR}
+    Location Should Be    ${LOGIN_URL}
+    Maximize Browser Window

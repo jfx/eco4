@@ -1,0 +1,9 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+I fill in and submit login form
+    [Arguments]    ${user}    ${pass}
+    Input Text    username    ${user}
+    Input Text    password    ${pass}
+    Click Button    _submit

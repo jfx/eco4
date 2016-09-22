@@ -1,0 +1,13 @@
+*** Variables ***
+${SERVER}         http://localhost:8000
+${LOGIN_URL}      ${SERVER}/login
+${PROJECT_DIR}    ../../../..
+${CONSOLE_PATH}    ${PROJECT_DIR}/bin/console
+${REMOTE}         False
+${BROWSER}        ff
+${FF_PROFILE_DIR}    ${EMPTY}
+${HUB}            http://localhost:4444/wd/hub
+${DC_VERSION}     ${EMPTY}
+${DC_OS}          LINUX
+${SHORT_SLEEP}    2s
+${TIMEOUT}        5s
