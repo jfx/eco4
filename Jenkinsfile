@@ -2,45 +2,63 @@
 // - PROJECT_PATH : string parameter
 // - INTERNET : choice parameter true/false
 //Jenkins plugins :
+// - Pipeline: Model Definition
 // - Static Analysis Utilities + checkstyle plugin
 // - pmd plugin
 // - Robot Framework plugin
-node {
 
-    stage("Clean") {
-        sh 'rm -rf build/'
-        sh 'mkdir build/'
-        sh 'mkdir build/logs/'
-    }
-    
-    stage("InitDB") { 
-        dir("${PROJECT_PATH}") {
-            sh 'php bin/console doctrine:database:drop --force --no-interaction'
-            sh 'php bin/console doctrine:database:create --no-interaction'
-            sh 'php bin/console doctrine:schema:create --no-interaction'
-            sh 'php bin/console doctrine:fixtures:load --no-interaction'
+pipeline {
+    agent label:'master'
+    stages {
+
+        stage("Clean") {
+            notifySlack("#CCCCCC", "Build started")
+
+            sh 'rm -rf build/'
+            sh 'mkdir build/'
+            sh 'mkdir build/logs/'
         }
-    }
-
-    stage("Update") {
-        composerUpdate()
-    }
         
-    stage("Check") {
-        dir("${PROJECT_PATH}") {
-            sh 'vendor/bin/php-cs-fixer fix --config=sf23 --fixers=-declare_equal_normalize . || true'
-            sh 'vendor/bin/parallel-lint src/'
+        stage("InitDB") { 
+            dir("${PROJECT_PATH}") {
+                sh 'php bin/console doctrine:database:drop --force --no-interaction'
+                sh 'php bin/console doctrine:database:create --no-interaction'
+                sh 'php bin/console doctrine:schema:create --no-interaction'
+                sh 'php bin/console doctrine:fixtures:load --no-interaction'
+            }
         }
-        runPhpcs()
-        runPhpmd()
-    }
     
-    stage("Unit Tests") {
-        runUnitTests()
+        stage("Update") {
+            composerUpdate()
+        }
+            
+        stage("Check") {
+            dir("${PROJECT_PATH}") {
+                sh 'vendor/bin/php-cs-fixer fix --config=sf23 --fixers=-declare_equal_normalize . || true'
+                sh 'vendor/bin/parallel-lint src/'
+            }
+            runPhpcs()
+            runPhpmd()
+        }
+        
+        stage("Unit Tests") {
+            runUnitTests()
+        }
+        
+        stage("RF Tests") {
+            runRFTests()
+        }
     }
-    
-    stage("RF Tests") {
-        runRFTests()
+    postBuild {
+        success {
+            notifySlack("good", "Build ended successfully")
+        }
+        failure {
+            notifySlack("danger", "Build failed")
+        }
+        unstable {
+            notifySlack("warning", "Build unstable")
+        }
     }
 }
 
@@ -107,4 +125,12 @@ def runRFTests() {
         junit 'build/logs/*-junit.xml'
         step([$class: 'RobotPublisher', disableArchiveOutput: false, logFileName: 'log.html', onlyCritical: true, otherFiles: '*.png', outputFileName: 'output.xml', outputPath: 'build/logs/', passThreshold: 90, reportFileName: 'report.html', unstableThreshold: 100])
     }
+}
+
+def notifySlack(String color, String message) {
+    dir("${PROJECT_PATH}") {
+        withCredentials([[$class: 'StringBinding', credentialsId: 'a7f52ea9-a4ae-4f38-945c-cca2942765aa', variable: 'TOKEN']]) {
+            sh "bin/slackSend \"${env.JOB_NAME}\" \"${color}\" \"${message} : ${env.JOB_NAME} ${env.BUILD_NUMBER}\" \"${TOKEN}\""
+        }
+    }        
 }

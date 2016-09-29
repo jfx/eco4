@@ -1,0 +1,5 @@
+#!/bin/bash
+# Usage : ./bin/slackSend <title> <good|warning|danger|#CCCCCC> <message> <token>
+# Exemple : ./bin/slackSend "Job XXXX" "#CCCCCC" "Build YYYY started" "T3BKQ0XXL/A2FKY2YYY/V3sWdRabDu0GPnFddB"
+payload='payload={"text": "'"${1}"'", "attachments": [ {"text": "'"${3}"'", "color": "'"${2}"'" } ]}'
+curl -X POST --data-urlencode  "$payload" https://hooks.slack.com/services/"${4}"
