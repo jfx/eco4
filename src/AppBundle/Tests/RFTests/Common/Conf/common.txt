@@ -3,6 +3,7 @@ ${SERVER}         http://localhost:8000
 ${LOGIN_URL}      ${SERVER}/login
 ${PROJECT_DIR}    ../../../..
 ${CONSOLE_PATH}    ${PROJECT_DIR}/bin/console
+${CONFIG_PATH}    ${PROJECT_DIR}/app/config
 ${REMOTE}         False
 ${BROWSER}        ff
 ${FF_PROFILE_DIR}    ${EMPTY}
@@ -10,4 +11,5 @@ ${HUB}            http://localhost:4444/wd/hub
 ${DC_VERSION}     ${EMPTY}
 ${DC_OS}          LINUX
 ${SHORT_SLEEP}    2s
-${TIMEOUT}        5s
+${COOKIE_LIFETIME}    5
+${WAIT_TIMEOUT}    8s

@@ -1,4 +1,5 @@
 *** Settings ***
+Library           String
 Library           Selenium2Library
 Library           OperatingSystem
 Resource          ../Conf/common.txt
@@ -6,6 +7,14 @@ Resource          ../Conf/common.txt
 *** Keywords ***
 TestSetup
     I reset database
+
+TestLifetimeSetup
+    I set cookie lifetime
+    I reset database
+
+TestLifetimeTeardown
+    Close All Browsers
+    I unset cookie lifetime
 
 I reset database
     ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} doctrine:database:drop --force --no-interaction
@@ -16,3 +25,25 @@ I reset database
     Should Be Equal As Integers    ${rc}    0
     ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} doctrine:fixtures:load --no-interaction
     Should Be Equal As Integers    ${rc}    0
+
+I set cookie lifetime
+    Move File    ${CONFIG_PATH}/config.yml    ${CONFIG_PATH}/config_bck.yml
+    ${config_file} =    Get File    ${CONFIG_PATH}/config_bck.yml
+    ${config_file} =    Replace String Using Regexp    ${config_file}    cookie_lifetime:\.+    cookie_lifetime: ${COOKIE_LIFETIME}
+    Create File    ${CONFIG_PATH}/config.yml    ${config_file}
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} cache:clear
+    Should Be Equal As Integers    ${rc}    0
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} cache:warmup
+    Should Be Equal As Integers    ${rc}    0
+
+I unset cookie lifetime
+    ${status}    ${value} =    Run Keyword And Ignore Error    File Should Exist    ${CONFIG_PATH}/config_bck.yml
+    Run Keyword If    '${status}' == 'PASS'    Remove File    ${CONFIG_PATH}/config.yml
+    Run Keyword If    '${status}' == 'PASS'    Move File    ${CONFIG_PATH}/config_bck.yml    ${CONFIG_PATH}/config.yml
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} cache:clear
+    Should Be Equal As Integers    ${rc}    0
+    ${rc} =    Run And Return Rc    php ${CONSOLE_PATH} cache:warmup
+    Should Be Equal As Integers    ${rc}    0
+
+I am waiting for timeout
+    sleep    ${WAIT_TIMEOUT}

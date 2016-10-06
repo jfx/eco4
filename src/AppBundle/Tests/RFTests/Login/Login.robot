@@ -47,3 +47,28 @@ Wrong password for locked user
     Given I open browser on login page
     When I fill in and submit login form    ${locked_username}    wrong_password
     Then Page Should Contain    Account is locked.
+
+Successfull user login with redirect after timeout
+    [Tags]    timeout
+    [Setup]    TestLifetimeSetup
+    Given I open browser on login page
+    And I fill in and submit login form    ${user_username}    ${user_password}
+    And I am waiting for timeout
+    And Go To    ${SERVER}/profile
+    And Location Should Be    ${LOGIN_URL}
+    When I fill in and submit login form    ${user_username}    ${user_password}
+    Then Location Should Be    ${SERVER}/profile/
+    [Teardown]    TestLifetimeTeardown
+
+Successfull login with remember me
+    [Tags]    timeout
+    [Setup]    TestLifetimeSetup
+    Given I open browser on login page
+    Input Text    username    ${user_username}
+    Input Text    password    ${user_password}
+    And Select Checkbox    remember_me
+    And Click element    _submit
+    And I am waiting for timeout
+    When Go To    ${SERVER}/home
+    Then Location Should Be    ${SERVER}/home
+    [Teardown]    TestLifetimeTeardown
