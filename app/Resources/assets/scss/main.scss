@@ -1,6 +1,13 @@
 // Flatly variables
 @import "bootswatch-flatly/variables";
 
+// Default color from bootstrap
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: darken(adjust-hue(#f2dede, -10), 5%);
+}
+
 body { 
     background-image: url('../images/bg-light.jpg');
     background-size: cover;
