@@ -16,15 +16,27 @@ Anonymous user should see login page
     When I open browser on login page
     Then Page Should Contain    Login to eco4.io
 
-Successfull user login
+Successfull user login by username
     Given I open browser on login page
     When I fill in and submit login form    ${user_username}    ${user_password}
     Then Page Should Contain    Dashboard
     And Page Should Not Contain    Admin
 
-Successfull admin login
+uccessfull user login by email
+    Given I open browser on login page
+    When I fill in and submit login form    ${user_email}    ${user_password}
+    Then Page Should Contain    Dashboard
+    And Page Should Not Contain    Admin
+
+Successfull admin login by username
     Given I open browser on login page
     When I fill in and submit login form    ${admin_username}    ${admin_password}
+    Then Page Should Contain    Dashboard
+    And Page Should Contain    Admin
+
+Successfull admin login by email
+    Given I open browser on login page
+    When I fill in and submit login form    ${admin_email}    ${admin_password}
     Then Page Should Contain    Dashboard
     And Page Should Contain    Admin
 
@@ -38,9 +50,19 @@ Wrong username
     When I fill in and submit login form    wrong_username    ${user_password}
     Then Page Should Contain    Invalid credentials
 
-Wrong password
+Wrong email
+    Given I open browser on login page
+    When I fill in and submit login form    wrong_email@example.com    ${user_password}
+    Then Page Should Contain    Invalid credentials
+
+Wrong password for username
     Given I open browser on login page
     When I fill in and submit login form    ${user_username}    wrong_password
+    Then Page Should Contain    Invalid credentials
+
+Wrong password for email
+    Given I open browser on login page
+    When I fill in and submit login form    ${user_email}    wrong_password
     Then Page Should Contain    Invalid credentials
 
 Wrong password for locked user

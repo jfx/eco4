@@ -1,7 +1,9 @@
 *** Variables ***
 ${user_username}    user2
+${user_email}     user2@example.com
 ${user_password}    pass4user2
 ${admin_username}    user1
+${admin_email}    user1@example.com
 ${admin_password}    pass4user1
 ${locked_username}    lock
 ${locked_password}    pass4lock
