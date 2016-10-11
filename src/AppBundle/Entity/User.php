@@ -61,7 +61,8 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->mine = new Mine();
+// TODO
+//         $this->mine = new Mine();
     }
 
     /**

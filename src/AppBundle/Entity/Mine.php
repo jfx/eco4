@@ -63,25 +63,16 @@ class Mine extends AbstractBuilding
     private $r3;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="r1Factor", type="smallint")
+     * @ORM\Column(name="factor", type="string")
      */
-    private $r1Factor;
+    private $factor;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="r2Factor", type="smallint")
+     * @var MineFactor
      */
-    private $r2Factor;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="r3Factor", type="smallint")
-     */
-    private $r3Factor;
+    private $mineFactor = null;
 
     /**
      * Set r1.
@@ -156,17 +147,41 @@ class Mine extends AbstractBuilding
     }
 
     /**
-     * Set r1Factor.
+     * Set factor.
      *
-     * @param int $r1Factor
+     * @param string $factor
      *
      * @return Mine
      */
-    public function setR1Factor(int $r1Factor): Mine
+    public function setFactor(string $factor): Mine
     {
-        $this->r1Factor = $r1Factor;
+        $this->factor = $factor;
 
         return $this;
+    }
+
+    /**
+     * Get factor.
+     *
+     * @return string
+     */
+    public function getfactor(): string
+    {
+        return $this->factor;
+    }
+
+    /**
+     * Get mine factor.
+     *
+     * @return MineFactor
+     */
+    public function getMineFactor(): MineFactor
+    {
+        if (is_null($this->mineFactor)) {
+            $this->mineFactor = new MineFactor($this->factor);
+        }
+
+        return $this->mineFactor;
     }
 
     /**
@@ -176,21 +191,7 @@ class Mine extends AbstractBuilding
      */
     public function getR1Factor(): int
     {
-        return $this->r1Factor;
-    }
-
-    /**
-     * Set r2Factor.
-     *
-     * @param int $r2Factor
-     *
-     * @return Mine
-     */
-    public function setR2Factor(int $r2Factor): Mine
-    {
-        $this->r2Factor = $r2Factor;
-
-        return $this;
+        return $this->getMineFactor()->getR1Factor();
     }
 
     /**
@@ -200,21 +201,7 @@ class Mine extends AbstractBuilding
      */
     public function getR2Factor(): int
     {
-        return $this->r2Factor;
-    }
-
-    /**
-     * Set r3Factor.
-     *
-     * @param int $r3Factor
-     *
-     * @return Mine
-     */
-    public function setR3Factor(int $r3Factor): Mine
-    {
-        $this->r3Factor = $r3Factor;
-
-        return $this;
+        return $this->getMineFactor()->getR2Factor();
     }
 
     /**
@@ -224,7 +211,7 @@ class Mine extends AbstractBuilding
      */
     public function getR3Factor(): int
     {
-        return $this->r3Factor;
+        return $this->getMineFactor()->getR3Factor();
     }
 
     /**

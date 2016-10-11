@@ -26,7 +26,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Mine entity class.
+ * Building abstract entity class.
  *
  * @category  Eco4 App
  *

@@ -44,7 +44,6 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
      *
      * @param ObjectManager $manager The entity manager
      *
-     *
      * @codeCoverageIgnore
      */
     public function load(ObjectManager $manager)
@@ -58,9 +57,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 10,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 100,
-                'r2Factor' => 0,
-                'r3Factor' => 0,
+                'factor' => '100000000',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -68,9 +65,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 0,
-                'r2Factor' => 100,
-                'r3Factor' => 0,
+                'factor' => '000100000',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -78,9 +73,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 0,
-                'r2Factor' => 0,
-                'r3Factor' => 100,
+                'factor' => '000000100',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -88,9 +81,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 50,
-                'r2Factor' => 20,
-                'r3Factor' => 5,
+                'factor' => '050020005',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -98,9 +89,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 22,
-                'r2Factor' => 22,
-                'r3Factor' => 22,
+                'factor' => '022022022',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -108,9 +97,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 22,
-                'r2Factor' => 22,
-                'r3Factor' => 22,
+                'factor' => '022022022',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -118,9 +105,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 22,
-                'r2Factor' => 22,
-                'r3Factor' => 22,
+                'factor' => '022022022',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -128,9 +113,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 22,
-                'r2Factor' => 22,
-                'r3Factor' => 22,
+                'factor' => '022022022',
                 'lastUpdate' => $refDate,
             ),
             array(
@@ -138,9 +121,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 22,
-                'r2Factor' => 22,
-                'r3Factor' => 22,
+                'factor' => '022022022',
                 'lastUpdate' => $now,
             ),
             array(
@@ -148,9 +129,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
                 'r1' => 0,
                 'r2' => 0,
                 'r3' => 0,
-                'r1Factor' => 22,
-                'r2Factor' => 22,
-                'r3Factor' => 22,
+                'factor' => '022022022',
                 'lastUpdate' => $now,
             ),
         );
@@ -162,9 +141,7 @@ class Mines extends AbstractFixture implements OrderedFixtureInterface
             $objectList[$i]->setR1($data['r1']);
             $objectList[$i]->setR2($data['r2']);
             $objectList[$i]->setR3($data['r3']);
-            $objectList[$i]->setR1Factor($data['r1Factor']);
-            $objectList[$i]->setR2Factor($data['r2Factor']);
-            $objectList[$i]->setR3Factor($data['r3Factor']);
+            $objectList[$i]->setFactor($data['factor']);
             $objectList[$i]->setLastUpdate($data['lastUpdate']);
 
             $manager->persist($objectList[$i]);

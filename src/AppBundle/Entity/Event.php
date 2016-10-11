@@ -41,7 +41,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Event
 {
-    const CAT_UPGRADE = 1;
+    const CAT_CREATE = 1;
+    const CAT_UPGRADE = 2;
 
     const OT_MINE = 1;
 

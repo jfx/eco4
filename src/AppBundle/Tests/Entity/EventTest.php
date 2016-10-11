@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Service;
+namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\Event;
 use AppBundle\Tests\KernelDbTestCase;

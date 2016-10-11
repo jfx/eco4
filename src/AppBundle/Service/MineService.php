@@ -56,6 +56,39 @@ class MineService
     }
 
     /**
+     * Create a mine.
+     *
+     * @param DateTime $dateTime The datetime to update to
+     */
+    public function create(DateTime $dateTime)
+    {
+        $mine = new Mine();
+        $mine->setLevel(1);
+        $mine->setR1(50);
+        $mine->setR2(50);
+        $mine->setR3(50);
+        $mine->setLastUpdate($dateTime);
+        $events = $this->em->getRepository(Event::class)
+            ->findPlannedEventByBuildingBetween($mine, $dateTime);
+
+        foreach ($events as $event) {
+            if ($event->getStatus() == Event::STATUS_PLANNED) {
+                $mine->refresh($event->getEventDatetime());
+
+                if ($event->getCategory() == Event::CAT_UPGRADE) {
+                    $mine->upgrade();
+                }
+                $event->setStatus(Event::STATUS_DONE);
+                $this->em->persist($event);
+            }
+        }
+        $mine->refresh($dateTime);
+
+        $this->em->persist($mine);
+        $this->em->flush();
+    }
+
+    /**
      * Update mine.
      *
      * @param Mine     $mine     The mine to update

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Service;
+namespace AppBundle\Tests\Entity;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Mine;
@@ -19,9 +19,7 @@ class MineTest extends KernelDbTestCase
         $this->assertEquals(10, $mine->getR1());
         $this->assertEquals(0, $mine->getR2());
         $this->assertEquals(0, $mine->getR3());
-        $this->assertEquals(100, $mine->getR1Factor());
-        $this->assertEquals(0, $mine->getR2Factor());
-        $this->assertEquals(0, $mine->getR3Factor());
+        $this->assertEquals('100000000', $mine->getFactor());
 
         $date = new DateTime('2016-08-01 00:00:01');
         $this->assertEquals($date, $mine->getLastUpdate());
@@ -35,9 +33,7 @@ class MineTest extends KernelDbTestCase
         $mine->setR1(21);
         $mine->setR2(22);
         $mine->setR3(23);
-        $mine->setR1Factor(31);
-        $mine->setR2Factor(32);
-        $mine->setR3Factor(33);
+        $mine->setFactor('005050020');
 
         $date = new DateTime('2016-08-02 01:01:00');
         $mine->setLastUpdate($date);
@@ -51,9 +47,7 @@ class MineTest extends KernelDbTestCase
         $this->assertEquals(21, $mine2->getR1());
         $this->assertEquals(22, $mine2->getR2());
         $this->assertEquals(23, $mine2->getR3());
-        $this->assertEquals(31, $mine2->getR1Factor());
-        $this->assertEquals(32, $mine2->getR2Factor());
-        $this->assertEquals(33, $mine2->getR3Factor());
+        $this->assertEquals('005050020', $mine2->getFactor());
         $this->assertEquals($date, $mine2->getLastUpdate());
     }
 
