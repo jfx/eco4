@@ -24,6 +24,9 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Mine;
+use AppBundle\Entity\ObjectType;
+use AppBundle\Entity\User;
+use AppBundle\Util\Period;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 
@@ -58,30 +61,18 @@ class MineService
     /**
      * Create a mine.
      *
-     * @param DateTime $dateTime The datetime to update to
+     * @param DateTime $dateTime   The datetime to update to
+     * @param string   $mineFactor Mine factor of production
      */
-    public function create(DateTime $dateTime)
+    public function create(DateTime $dateTime, string $mineFactor)
     {
         $mine = new Mine();
         $mine->setLevel(1);
         $mine->setR1(50);
         $mine->setR2(50);
         $mine->setR3(50);
+        $mine->setFactor($mineFactor);
         $mine->setLastUpdate($dateTime);
-        $events = $this->em->getRepository(Event::class)
-            ->findPlannedEventByBuildingBetween($mine, $dateTime);
-
-        foreach ($events as $event) {
-            if ($event->getStatus() == Event::STATUS_PLANNED) {
-                $mine->refresh($event->getEventDatetime());
-
-                if ($event->getCategory() == Event::CAT_UPGRADE) {
-                    $mine->upgrade();
-                }
-                $event->setStatus(Event::STATUS_DONE);
-                $this->em->persist($event);
-            }
-        }
         $mine->refresh($dateTime);
 
         $this->em->persist($mine);
@@ -91,13 +82,17 @@ class MineService
     /**
      * Update mine.
      *
-     * @param Mine     $mine     The mine to update
+     * @param User     $user     The owner of the mine
      * @param DateTime $dateTime The datetime to update to
      */
-    public function update(Mine $mine, DateTime $dateTime)
+    public function update(User $user, DateTime $dateTime)
     {
+        $mine = $user->getMine();
+
+        $period = new Period($user->getMine()->getLastUpdate(), $dateTime);
+
         $events = $this->em->getRepository(Event::class)
-            ->findPlannedEventByBuildingBetween($mine, $dateTime);
+            ->findPlannedEventByBuildingType4UserBetween($user, ObjectType::MINE, $period);
 
         foreach ($events as $event) {
             if ($event->getStatus() == Event::STATUS_PLANNED) {

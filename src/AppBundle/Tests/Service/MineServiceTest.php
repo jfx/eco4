@@ -3,6 +3,7 @@
 namespace AppBundle\Tests\Service;
 
 use AppBundle\Entity\Mine;
+use AppBundle\Entity\User;
 use AppBundle\Tests\KernelDbTestCase;
 use DateTime;
 
@@ -21,12 +22,13 @@ class MineServiceTest extends KernelDbTestCase
     {
         $mine = $this->entityManager->getRepository(Mine::class)->find(1);
         $this->assertEquals(new DateTime('2016-08-01 00:00:01'), $mine->getLastUpdate());
+        $user = $this->entityManager->getRepository(User::class)->find(1);
 
         $prodRxOnPeriod = 24 * $mine->getProdLevelIndex() * 1;
         $prodUpdated = $mine->getR1() + $prodRxOnPeriod;
         $newDate = new DateTime('2016-08-02 00:00:01');
 
-        $this->mineService->update($mine, $newDate);
+        $this->mineService->update($user, $newDate);
 
         $this->assertEquals($prodUpdated, $mine->getR1());
         $this->assertEquals(0, $mine->getR2());
@@ -38,12 +40,13 @@ class MineServiceTest extends KernelDbTestCase
     {
         $mine = $this->entityManager->getRepository(Mine::class)->find(2);
         $this->assertEquals(new DateTime('2016-08-01 00:00:01'), $mine->getLastUpdate());
+        $user = $this->entityManager->getRepository(User::class)->find(2);
 
         $prodRxOnPeriod = 24 * $mine->getProdLevelIndex() * 1;
         $prodUpdated = $mine->getR2() + $prodRxOnPeriod;
         $newDate = new DateTime('2016-08-02 00:00:01');
 
-        $this->mineService->update($mine, $newDate);
+        $this->mineService->update($user, $newDate);
 
         $this->assertEquals(0, $mine->getR1());
         $this->assertEquals($prodUpdated, $mine->getR2());
@@ -55,12 +58,13 @@ class MineServiceTest extends KernelDbTestCase
     {
         $mine = $this->entityManager->getRepository(Mine::class)->find(3);
         $this->assertEquals(new DateTime('2016-08-01 00:00:01'), $mine->getLastUpdate());
+        $user = $this->entityManager->getRepository(User::class)->find(3);
 
         $prodRxOnPeriod = 24 * $mine->getProdLevelIndex() * 1;
         $prodUpdated = $mine->getR3() + $prodRxOnPeriod;
         $newDate = new DateTime('2016-08-02 00:00:01');
 
-        $this->mineService->update($mine, $newDate);
+        $this->mineService->update($user, $newDate);
 
         $this->assertEquals(0, $mine->getR1());
         $this->assertEquals(0, $mine->getR2());
@@ -72,6 +76,7 @@ class MineServiceTest extends KernelDbTestCase
     {
         $mine = $this->entityManager->getRepository(Mine::class)->find(6);
         $this->assertEquals(new DateTime('2016-08-01 00:00:01'), $mine->getLastUpdate());
+        $user = $this->entityManager->getRepository(User::class)->find(6);
 
         $prodRxOnPeriod1 = 24 * $mine->getProdLevelIndex() * $mine->getR1Factor() / 100;
         $mine->setLevel(2);
@@ -80,7 +85,7 @@ class MineServiceTest extends KernelDbTestCase
         $mine->setLevel(1);
         $newDate = new DateTime('2016-08-03 00:00:01');
 
-        $this->mineService->update($mine, $newDate);
+        $this->mineService->update($user, $newDate);
 
         $this->assertEquals($prodUpdated, $mine->getR1());
         $this->assertEquals($prodUpdated, $mine->getR2());
@@ -93,11 +98,12 @@ class MineServiceTest extends KernelDbTestCase
     {
         $mine = $this->entityManager->getRepository(Mine::class)->find(7);
         $this->assertEquals(new DateTime('2016-08-01 00:00:01'), $mine->getLastUpdate());
+        $user = $this->entityManager->getRepository(User::class)->find(7);
 
         $prodUpdated = 48 * $mine->getProdLevelIndex() * $mine->getR1Factor() / 100;
         $newDate = new DateTime('2016-08-03 00:00:01');
 
-        $this->mineService->update($mine, $newDate);
+        $this->mineService->update($user, $newDate);
 
         $this->assertEquals($prodUpdated, $mine->getR1());
         $this->assertEquals($prodUpdated, $mine->getR2());

@@ -21,6 +21,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\ObjectType;
 use DateTime;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -54,15 +55,15 @@ class Events extends AbstractFixture implements OrderedFixtureInterface
         $dataArray = array(
             array(
                 'category' => Event::CAT_UPGRADE,
-                'type' => Event::OT_MINE,
-                'objectId' => 6,
+                'type' => ObjectType::MINE,
+                'user' => 'user6-user',
                 'datetime' => $refDate,
                 'status' => Event::STATUS_PLANNED,
             ),
             array(
                 'category' => Event::CAT_UPGRADE,
-                'type' => Event::OT_MINE,
-                'objectId' => 7,
+                'type' => ObjectType::MINE,
+                'user' => 'user7-user',
                 'datetime' => $refDate,
                 'status' => Event::STATUS_CANCELED,
             ),
@@ -73,7 +74,7 @@ class Events extends AbstractFixture implements OrderedFixtureInterface
             $objectList[$i] = new Event();
             $objectList[$i]->setCategory($data['category']);
             $objectList[$i]->setObjectType($data['type']);
-            $objectList[$i]->setObjectId($data['objectId']);
+            $objectList[$i]->setUser($this->getReference($data['user']));
             $objectList[$i]->setEventDatetime($data['datetime']);
             $objectList[$i]->setStatus($data['status']);
 

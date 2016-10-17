@@ -22,8 +22,9 @@ declare(strict_types=1);
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\AbstractBuilding;
 use AppBundle\Entity\Mine;
+use AppBundle\Entity\ObjectType;
+use AppBundle\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 
@@ -79,14 +80,17 @@ class EngineService
     /**
      * Update a building.
      *
-     * @param AbstractBuilding $building The building to update
+     * @param User $user       The owner of the building
+     * @param int  $objectType The building type
      */
-    public function refresh(AbstractBuilding $building)
+    public function refresh(User $user, int $objectType)
     {
         $dateTime = new DateTime();
 
-        if ($building instanceof Mine) {
-            $this->mineService->update($building, $dateTime);
+        switch ($objectType) {
+            case ObjectType::MINE:
+                $this->mineService->update($user, $dateTime);
+                break;
         }
     }
 }

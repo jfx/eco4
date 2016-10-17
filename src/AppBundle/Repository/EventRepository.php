@@ -22,8 +22,8 @@ declare(strict_types=1);
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\AbstractBuilding;
-use DateTime;
+use AppBundle\Entity\User;
+use AppBundle\Util\Period;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -42,21 +42,22 @@ class EventRepository extends EntityRepository
     /**
      * Get all events for an object.
      *
-     * @param Building $building
-     * @param DateTime $to       The limit
+     * @param User   $user       The owner of the building
+     * @param int    $objectType The building type
+     * @param Period $period     The period of events
      *
      * @return array List of events
      */
-    public function findPlannedEventByBuildingBetween(AbstractBuilding $building, DateTime $to)
+    public function findPlannedEventByBuildingType4UserBetween(User $user, int $objectType, Period $period)
     {
         $qb = $this->createQueryBuilder('e')
             ->where('e.objectType = :objectType')
-            ->andWhere('e.objectId = :objectId')
+            ->andWhere('e.user = :user')
             ->andWhere('e.eventDatetime between :from and :to')
-            ->setParameter('objectType', $building->getType())
-            ->setParameter('objectId', $building->getId())
-            ->setParameter('from', $building->getLastUpdate())
-            ->setParameter('to', $to)
+            ->setParameter('objectType', $objectType)
+            ->setParameter('user', $user)
+            ->setParameter('from', $period->getStartDate())
+            ->setParameter('to', $period->getEndDate())
             ->orderBy('e.eventDatetime', 'ASC');
 
         $results = $qb->getQuery()->getResult();

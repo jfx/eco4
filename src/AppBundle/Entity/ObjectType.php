@@ -20,16 +20,10 @@
  */
 declare(strict_types=1);
 
-namespace AppBundle\Controller;
-
-use AppBundle\Entity\ObjectType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+namespace AppBundle\Entity;
 
 /**
- * Default controller class.
+ * Object type class.
  *
  * @category  Eco4 App
  *
@@ -39,29 +33,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @link      https://www.eco4.io
  */
-class DefaultController extends Controller
+class ObjectType
 {
-    /**
-     * Default route.
-     *
-     * @return Response A Response instance
-     *
-     * @Route("/home", name="homepage")
-     * @Security("has_role('ROLE_USER')")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $user = $this->getUser();
-
-        $engine = $this->get('app.engine');
-        $engine->refresh($user, ObjectType::MINE);
-
-        $mine = $user->getMine();
-
-        return $this->render(
-            'default/index.html.twig',
-            ['mine' => $mine]
-        );
-    }
+    const MINE = 1;
 }

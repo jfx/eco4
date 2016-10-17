@@ -44,8 +44,6 @@ class Event
     const CAT_CREATE = 1;
     const CAT_UPGRADE = 2;
 
-    const OT_MINE = 1;
-
     const STATUS_PLANNED = 1;
     const STATUS_DONE = 2;
     const STATUS_CANCELED = 3;
@@ -74,11 +72,12 @@ class Event
     protected $objectType;
 
     /**
-     * @var int
+     * @var User
      *
-     * @ORM\Column(name="object_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $objectId;
+    protected $user;
 
     /**
      * @var \DateTime
@@ -153,27 +152,27 @@ class Event
     }
 
     /**
-     * Set object id.
+     * Set user.
      *
-     * @param int $id Id of object
+     * @param User $user User
      *
      * @return Event
      */
-    public function setObjectId(int $id): Event
+    public function setUser(User $user): Event
     {
-        $this->objectId = $id;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get object id.
+     * Get user.
      *
-     * @return int
+     * @return User
      */
-    public function getObjectId(): int
+    public function getUser(): User
     {
-        return $this->objectId;
+        return $this->user;
     }
 
     /**

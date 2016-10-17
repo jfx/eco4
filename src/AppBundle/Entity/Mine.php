@@ -251,7 +251,7 @@ class Mine extends AbstractBuilding
      */
     public function getType(): int
     {
-        return Event::OT_MINE;
+        return ObjectType::MINE;
     }
 
     /**

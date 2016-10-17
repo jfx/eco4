@@ -2,8 +2,8 @@
 
 namespace AppBundle\Tests\Entity;
 
-use AppBundle\Entity\Event;
 use AppBundle\Entity\Mine;
+use AppBundle\Entity\ObjectType;
 use AppBundle\Tests\KernelDbTestCase;
 use DateTime;
 
@@ -14,7 +14,7 @@ class MineTest extends KernelDbTestCase
         $mine = $this->entityManager->getRepository(Mine::class)->find(1);
 
         $this->assertEquals(1, $mine->getId());
-        $this->assertEquals(Event::OT_MINE, $mine->getType());
+        $this->assertEquals(ObjectType::MINE, $mine->getType());
         $this->assertEquals(1, $mine->getLevel());
         $this->assertEquals(10, $mine->getR1());
         $this->assertEquals(0, $mine->getR2());
