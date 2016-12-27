@@ -22,7 +22,9 @@
                       {% endif %}
                       <div class="well">
                           <form action="{{ path("fos_user_security_check") }}" method="post">
-                              <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                {% if csrf_token %}
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                {% endif %}
                               
                               <div class="form-group">
                                   <label for="username" class="control-label">{{ 'security.login.username'|trans }}</label>
@@ -55,7 +57,7 @@
                           <li><span class="fa fa-check text-success"></span> Free and Open source</li>
                           <li><a href="/read-more/"><u>Read more</u></a></li>
                       </ul>
-                      <p><a href="/new-customer/" class="btn btn-info btn-block">Yes please, register now!</a></p>
+                      <p><a href="/register/" class="btn btn-info btn-block">Yes please, register now!</a></p>
                   </div>
               </div>
           </div>

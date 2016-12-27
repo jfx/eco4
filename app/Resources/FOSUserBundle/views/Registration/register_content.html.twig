@@ -1,0 +1,25 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div id="login-overlay" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Register to eco4.io</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+
+            <div class="well">
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}              
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    
+            {{ form_widget(form) }}
+    
+            <button type="submit" class="btn btn-success btn-block" id="_submit" name="_submit">{{ 'registration.submit'|trans }}</button>
+            <a href="/login" class="btn btn-default btn-block">Back to login</a>
+            {{ form_end(form) }}
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
